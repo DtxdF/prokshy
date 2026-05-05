@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# PROVIDE: prokshy
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name=prokshy
+rcvar=${name}_enable
+desc="Small and lightweight bhyve agent"
+
+load_rc_config ${name}
+
+: ${prokshy_enable:=NO}
+
+procname="/bin/sh"
+pidfile="/var/run/prokshy.pid"
+command="/usr/sbin/daemon"
+command_args="-c -S -T prokshy -p ${pidfile} -t \"${desc}\" /usr/local/bin/unixexec -c /dev/vtcon/prokshy /usr/local/libexec/prokshy/main.sh"
+
+run_rc_command "$1"
