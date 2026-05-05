@@ -224,3 +224,7 @@ Hello!
 ## Caveats
 
 As you have probably noticed, in the case of `virtio_console(4)`, there is always a connected peer; therefore, if you send data through the `unix(4)` socket (host) or the special character file (VM), the data is always sent, but this does not mean that the other side will perform something useful (if no one sees the data, there's nothing to do).
+
+## Notes
+
+1. Command names are limited to: `^[a-zA-Z0-9_.-]+$`. If the host attempts to execute a command that contains a character not allowed, the data is simply ignored.
