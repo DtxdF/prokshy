@@ -11,7 +11,7 @@ DEFAULT_BUFSIZE = 1048576
 
 LOG_STDERR = sys.stderr
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 def main():
     try:
