@@ -60,13 +60,6 @@ def start():
 
     make_data = "%s\n%s\n" % (command, data)
 
-    while True:
-        try:
-            buff = sock.recv(DEFAULT_BUFSIZE)
-
-        except TimeoutError:
-            break
-
     sock.sendall(make_data.encode())
 
     skip = True
