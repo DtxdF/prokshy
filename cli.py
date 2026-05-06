@@ -25,11 +25,11 @@ def start():
         description="Small and lightweight bhyve agent (client)",
         add_help=False
     )
+    parser.add_argument("--timeout", default=DEFAULT_TIMEOUT)
     parser.add_argument("--command", required=True)
     from_group = parser.add_mutually_exclusive_group(required=True)
     from_group.add_argument("--from-string")
     from_group.add_argument("--from-file")
-    parser.add_argument("--timeout", default=DEFAULT_TIMEOUT)
     parser.add_argument("--socket-path", required=True)
 
     args = parser.parse_args()
