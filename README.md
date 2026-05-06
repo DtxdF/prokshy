@@ -164,6 +164,7 @@ A slightly more complex command may require a more robust programming language, 
 #!/usr/local/bin/python
 
 import shlex
+import sys
 
 lex = shlex.shlex(posix=True)
 lex.whitespace = ","
@@ -189,8 +190,12 @@ mode = params.get("mode", "read")
 assert not (mode != "read" and mode != "write")
 
 if mode == "read":
-    with open(filename, "r") as fd:
-        print(fd.read(), flush=True, end="")
+    from base64 import b64encode
+
+    with open(filename, "rb") as fd:
+        data = b64encode(fd.read())
+        sys.stdout.buffer.write(data)
+        sys.stdout.buffer.flush()
 
 else:
     from base64 import b64decode
@@ -204,21 +209,12 @@ else:
 
 **Console**:
 
+In the following example, let's use the CLI client, which is more powerful.
+
 ```console
-# printf "%s\n%s\n" "OpenFile" "filename=/tmp/hello.txt" | nc -U vtcon.prokshy
-OpenFile
-filename=/tmp/hello.txt
-Hello, world!
-^C
-# printf "%s\n%s\n" "OpenFile" "filename=/tmp/hello.txt,mode=write,content=SGVsbG8hCg==" | nc -U vtcon.prokshy
-OpenFile
-filename=/tmp/hello.txt,mode=write,content=SGVsbG8hCg==
-^C
-# printf "%s\n%s\n" "OpenFile" "filename=/tmp/hello.txt" | nc -U vtcon.prokshy
-OpenFile
-filename=/tmp/hello.txt
+# prokshy --command OpenFile --from-string "filename=/tmp/hello.txt,mode=write,content=SGVsbG8hCg==" --socket-path vtcon.prokshy
+# prokshy --command OpenFile --from-string "filename=/tmp/hello.txt" --socket-path vtcon.prokshy | base64 -d
 Hello!
-^C
 ```
 
 ## Caveats
