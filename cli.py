@@ -11,6 +11,8 @@ DEFAULT_BUFSIZE = 1048576
 
 LOG_STDERR = sys.stderr
 
+VERSION = "0.1.0"
+
 def main():
     try:
         start()
@@ -25,6 +27,7 @@ def start():
         description="Small and lightweight bhyve agent (client)",
         add_help=False
     )
+    parser.add_argument("--version", action="version", version=f"%(prog)s {VERSION}")
     parser.add_argument("--timeout", default=DEFAULT_TIMEOUT)
     parser.add_argument("--command", required=True)
     from_group = parser.add_mutually_exclusive_group(required=True)
