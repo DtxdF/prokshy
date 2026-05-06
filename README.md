@@ -224,3 +224,4 @@ As you have probably noticed, in the case of `virtio_console(4)`, there is alway
 ## Notes
 
 1. Command names are limited to: `^[a-zA-Z0-9_.-]+$`. If the host attempts to execute a command that contains a character not allowed, the data is simply ignored.
+2. When the input (`--from-file` or `--from-string`) in the CLI contains a line break, only the first line is actually used. That's how the "protocol" works.
