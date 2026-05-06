@@ -53,9 +53,8 @@ def start():
         with open(args.from_file, "r") as fd:
             data = fd.readline()
 
-    else:
-        if len(data) > 0:
-            data = data.splitlines()[0]
+    if len(data) > 0:
+        data = data.splitlines()[0]
 
     command = args.command
 
